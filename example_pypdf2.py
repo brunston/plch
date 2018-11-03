@@ -10,8 +10,9 @@ outline = pdfReader.getOutlines()
 
 first_chapter = pdfReader.getDestinationPageNumber(outline[0])
 
-#pprinter(outline)
+##pprinter(outline[0])
 
 #pprinter(first_chapter)
 
 pprinter(outline[1])
+##pprinter(outline)
