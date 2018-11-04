@@ -2,7 +2,7 @@ import PyPDF2
 import sys
 
 class pdfExtractor:
-    def __init__(pdf_file):
+    def __init__(self, pdf_file):
         self.pdfReader = PyPDF2.PdfFileReader(open(pdf_file, 'rb'))
 
     def get_headers(self):
