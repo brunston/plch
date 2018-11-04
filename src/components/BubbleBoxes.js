@@ -1,11 +1,27 @@
 import React, { Component } from 'react';
+import "./BubbleBoxes.css";
 
-export default class BubbleBoxes extends Component {
+class BubbleBoxes extends Component {
+  
   render() {
+    const { dataBoxes, color } = this.props;
+    let boxes = dataBoxes.map((box, i) => {
+      return (
+      	<button className="btn btn-4 btn-4c" type="button" key={box.topic}>
+          {box.topic}
+        </button>
+      );
+    });
+
     return (
-      <div className="bubbleboxes">
-        { this.props.children }
-      </div>
-    )
+      	<div>{boxes}</div>
+    );
   }
 }
+
+BubbleBoxes.defaultProps = {
+  dataBoxes: [],
+  color: "#2196F3"
+};
+
+export default BubbleBoxes;

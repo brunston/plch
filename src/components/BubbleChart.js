@@ -7,14 +7,31 @@ class BubbleChart extends Component {
   
 
   render() {
-    const {data} = this.props;
+    const {data, dataBoxes} = this.props;
+    let priorDataBoxes = dataBoxes.filter((boxes, i) => {
+    	return boxes.order < 0;
+    });
+    let currDataBoxes = dataBoxes.filter((boxes, i) => {
+    	return boxes.order == 0;
+    });
+    let postDataBoxes = dataBoxes.filter((boxes, i) => {
+    	return boxes.order > 0;
+    });
+
+    	// <div style={{position: 'initial'}}>
+     //  		<BubbleLines data={data} />
+     //  	</div>
+
     return (
       <div className="window">
-      	<BubbleLines data={data} />
+      		<div className="half"><BubbleBoxes dataBoxes={priorDataBoxes} /></div>
+      		<div className="half" style={{top: '50%'}}><BubbleBoxes dataBoxes={postDataBoxes} /></div>      	
       </div>
     );
   }
 }
+
+
 
 BubbleChart.defaultProps = {
   data: [],
