@@ -13,7 +13,7 @@ import json
 # useful reference github/kbroman/d3examples/mongodb_flask
 
 # paths and names
-DATA_PATH = "section_headings.csv"
+DATA_PATH = "test.csv"
 DB_NAME = "plchdb"
 COLLECTION_NAME = "test"
 

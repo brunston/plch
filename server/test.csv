@@ -1,11 +1,5 @@
 title,heading
-foobar,Alpha Bravo
-foobar,Charlie Delta
-foobar,Echo Foxtrot
-foobar,Golf Hotel
-foobar,India Juliet
-foobar,Kilo Lima
-foobar,Mike November
+foobar,"Alpha Bravo"
 foobar,Oscar Papa
 foobar,Quebec Romeo
 foobar,Sierra Tango
@@ -18,3 +12,4 @@ bizbaz,Zulu Zulu
 bizbaz,Yankee Yankee
 bizbaz,Xray Xray
 bizbaz,ABCDEF
+
