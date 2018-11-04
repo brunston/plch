@@ -28,6 +28,7 @@ class DestinationWrapper:
 
 class PdfExtractor:
     def __init__(self, pdf_file):
+        PyPDF2.pdf.PageObject.extractText = extractText_patch
         self.pdfReader = PyPDF2.PdfFileReader(open(pdf_file, 'rb'))
         self.outline = self.pdfReader.getOutlines()
 
@@ -53,45 +54,31 @@ class PdfExtractor:
                 unnested_destWs.append(DestinationWrapper(nested_list, parent_str= parent_strings[-1]))
         wrp_dest_to_dests(self.outline, pop=False)
         self.generate_text(unnested_destWs)
-        corpus = [destW.text for destW in unnested_destWs]
-        pages = [self.pdfReader(destW.dest for destW in unnested_destWs]
+        corpus = [destW.text for destW in unnested_destWs if destW.text]
+        pages = [self.pdfReader.getDestinationPageNumber(destW.dest) for destW in unnested_destWs if destW.text]
+        headers = [destW.get_title() for destW in unnested_destWs if destW.text]
         return corpus, pages, headers
 
-
-    # def helper(self, outline, index, res):
-    #     new_list = list()
-    #     res.append(new_list)
-    #
-    #     subsections = outline[index]
-    #
-    #     for i in range(len(subsections)):
-    #         item = subsections[i]
-    #         if isinstance(item, list):
-    #             self.helper(subsections, i, new_list)
-    #         else:
-    #             try:
-    #                 toAdd = [item['/Title'], self.pdfReader.getDestinationPageNumber(item)]
-    #                 new_list.append(toAdd)
-    #             except:
-    #                 continue
-
-    def generate_text(self, unnested_dests):
+    def generate_text(self, unnested_destWs):
         #print len(result)
-        page_starts = [self.pdfReader.getDestinationPageNumber(destW.dest) for destW in unnested_dests] + [self.pdfReader.getNumPages()]
-        for i in range(len(unnested_dests)):
+        page_starts = [self.pdfReader.getDestinationPageNumber(destW.dest) for destW in unnested_destWs] + \
+                      [self.pdfReader.getNumPages()]
+        for i in range(len(unnested_destWs)):
             page_start = page_starts[i]
             page_end = page_starts[i+1]
             text = ''
             while page_start < page_end:
                 text += self.pdfReader.getPage(page_start).extractText()
                 page_start += 1
-            unnested_dests[i].set_text(text)
+            unnested_destWs[i].set_text(text)
 
 if __name__ == '__main__':
     path = get_pdf_file_in_texts("reinforcement-an-introduction.pdf")
     p = PdfExtractor(path)
-    destWs = p.get_corpus_pages_headers()
-    for destW in destWs:
-        print(destW.text)
+    corpus, pages, headers = p.get_corpus_pages_headers()
+    print(pages)
+    print(headers)
+    for text in corpus:
+        print(text)
         input("get more? <Enter>")
     print("done")
