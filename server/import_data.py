@@ -51,6 +51,7 @@ for i in range(len(documents)):
         "docid": i,
         "heading": documents[i],
         "tokens": texts[i],
+        "tokens_by_wordid": [j[0] for j in corpus_level_tf_idf[i]],
         "vector": corpus_level_tf_idf[i]})
 
 print(corpus_to_json_list)

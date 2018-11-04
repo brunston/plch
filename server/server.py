@@ -2,11 +2,10 @@
 Flask server for PLCH
 """
 
-from flask import Flask, abort
+from flask import Flask, abort, jsonify
 from bson import json_util
 import pymongo
 import pandas as pd
-import jsonify
 app = Flask(__name__)
 
 
@@ -20,7 +19,8 @@ TEST_FIELDS = {
     "title": True, "heading": True}
 
 FIELDS = {
-    "heading": True, "vector": True, "tokens": True, "docid": True
+    "heading": True, "vector": True, "tokens": True, "docid": True,
+    "tokens_by_wordid": True
     }
 
 try:
@@ -38,31 +38,41 @@ del test_df['_id']
 test_json = test_df.to_json()
 
 m_corpi = m_db[COLLECTION_CORPI]
-corpi = pd.DataFrame(list(m_corpi.find({}, FIELDS)))
+l_corpi = list(m_corpi.find({}, FIELDS))
+corpi = pd.DataFrame(l_corpi)
 corpi.set_index('docid')
+print(l_corpi)
 
 @app.route("/")
 def hello():
     return "hello world"
-    # return flask.render_template("danny_html")
 
 @app.route("/api/v0.1/corpus", methods=['GET'])
 def get_corpus_list():
     # get a list of texts in a corpus
     return corpi.loc[:,['heading']].to_json()
 
-@app.route("/api/v0.1/corpus/<string:text>/scoringvector", methods=['GET'])
+@app.route("/api/v0.1/corpus/<string:text>/vector", methods=['GET'])
 def get_scoring_vector(text):
     # get the scoring vector for a given text
-    return corpi.loc[int(text), ['vector']].to_json()
+    return jsonify(list(corpi.loc[int(text), ['vector']]))
+
+@app.route("/api/v0.1/corpus/<string:text>/tokens_by_wordid", methods=['GET'])
+def get_scoring_vector_by_wordid(text):
+    return jsonify(list(corpi.loc[int(text), ['tokens_by_wordid']))
 
 @app.route("/api/v0.1/corpus/<string:text>/heading", methods=['GET'])
 def get_heading(text):
-    return corpi.loc[int(text), ['heading']].to_json()
+    return jsonify(list(corpi.loc[int(text), ['heading']]))
 
 @app.route("/api/v0.1/corpus/<string:text>/tokens", methods=['GET'])
 def get_tokens(text):
-    return corpi.loc[int(text), ['tokens']].to_json()
+    return jsonify(list(corpi.loc[int(text), ['tokens']]))
+
+
+@app.route("/api/v0.1/corpus/word/<int:wordid>/find_texts", methods=['GET'])
+def get_texts_with_word(wordid):
+    return jsonify([text['docid'] for text in l_corpi if wordid in text['tokens_by_wordid']])
 
 @app.route("/api/v0.1/unstable/test", methods=['GET'])
 def get_unstable_test():
