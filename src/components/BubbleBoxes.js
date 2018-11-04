@@ -7,7 +7,7 @@ class BubbleBoxes extends Component {
     const { dataBoxes, color } = this.props;
     let boxes = dataBoxes.map((box, i) => {
       return (
-      	<button className="btn btn-4 btn-4c" type="button" key={box.topic}>
+      	<button className="btn btn-4 btn-4c" type="button" onClick={() => this.props.callback2FromParent(box)} key={box.topic}>
           {box.topic}
         </button>
       );
