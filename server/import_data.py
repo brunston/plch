@@ -25,29 +25,6 @@ except pymongo.errors.ServerSelectionTimeoutError as e:
     sys.exit()
 
 # create model and import
-"""
-documents = ["Human machine interface for lab abc computer applications",
-             "A survey of user opinion of computer system response time",
-             "The EPS user interface management system",
-             "System and human system engineering testing of EPS",
-             "Relation of user perceived response time to error measurement",
-             "The generation of random binary unordered trees",
-             "The intersection graph of paths in trees",
-             "Graph minors IV Widths of trees and well quasi ordering",
-             "Graph minors A survey"]
-stoplist = set('for a of the and to in'.split())
-texts = [[word for word in document.lower().split() if word not in stoplist]
-         for document in documents]
-frequency = defaultdict(int)
-for text in texts:
-    for word in text:
-        frequency[word] += 1
-texts = [[word for word in text if frequency[word] > 1] for text in texts]
-dictionary = corpora.Dictionary(texts)
-corpus = [dictionary.doc2bow(text) for text in texts]
-tf_idf = models.TfidfModel(corpus)
-corpus_level_tf_idf = tf_idf[corpus]
-"""
 
 pdf_file = pdf_extractor.get_pdf_file_in_texts("reinforcement-an-introduction.pdf")
 analyzer = ta.TopicAnalyzer(pdf_file)
