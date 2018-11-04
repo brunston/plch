@@ -8,11 +8,13 @@ def get_headers(pdf_file):
 
     for i in range(len(outline)):
         item = outline[i]
+        print (item)
+        ## checks for subheaders
         if isinstance(item, list):
-            print(i)
+            ## add subheader sections to result list as nested list
             helper(outline, i, pdfReader, result)
         else:
-
+            ## add list containing header title, page number, text respectively to result list
             toAdd = [item['/Title'], pdfReader.getDestinationPageNumber(item)]
             result.append(toAdd)
 
@@ -28,6 +30,7 @@ def helper(outline, index, pdfReader, res):
 
     for i in range(len(subsections)):
         item = subsections[i]
+        print(item)
         if isinstance(item, list):
             helper(subsections, i, pdfReader, new_list)
         else:
@@ -40,4 +43,4 @@ def helper(outline, index, pdfReader, res):
 #     pdf_file = sys.argv[1]
 #     red = get_header(pdf_file)
 #     return res
-get_headers('ee16a-reader.pdf')
+get_headers('pacs10-small.pdf')
