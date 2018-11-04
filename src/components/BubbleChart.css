@@ -1,0 +1,19 @@
+.window {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 80%;
+	height: 80%;
+	background: white;
+	border-top: 12px solid #2F3B79;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	transition: 0.3s;
+	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.bubbleline {
+  stroke-width: 10;
+  fill: none; 
+}
