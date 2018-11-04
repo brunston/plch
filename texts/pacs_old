@@ -1,0 +1,50 @@
+topic_list = [
+            "Nonviolence has always been a central concern of the field of Peace Studies, both as a principle and as a practice. In this short essay, Tracy Sugarman shows how nonviolence was used as a unifying element in the American south during the early stages of the civil rights movement in the 1960s. It also addresses, in a very personal way, the diff erent racial and cultural mediations of nonviolence, and the diff erent ways that nonviolence can be perceived in different political and social contexts. This is a valuable contribution to the discussion of nonviolence, where all too often, advocates of nonviolence assume a universal preference for the principle and practice of nonviolence and as a result, tend to gloss over the difficulties that often arise in complex movements when nonviolence is engaged.",
+        "While many nonviolent activists tended to view the use of violence and militancy as tactically unacceptable and morally indefensible, there was always an alternative view held by others that nonviolence was too slow, too ineff ective, or too elitist to achieve justice. Sidney Fine details these types of debates in the context of expanding urban violence in the 1960s in Detroit. In this essay, Fine make three central points: that at least some activists in the civil rights era felt that violence was an acceptable and necessary strategy, and opposed other activists who argued to the contrary; that riots were not just spontaneous outbreaks of senseless violence, but in fact had complex layers of structure and strategy; and that the efforts to control the representation and description of the riots themselves were strongly contested among activists and authorities alike.",
+        """Peace studies has often and rightfully questioned the state-centric bias of most discussions of peace and confl ict in the international arena, but it is still
+important to understand the structure of the nation-state and along with it, foundational concepts such as sovereignty. One simply cannot understand the role of the nation-state in international politics without also understanding the meaning and pervasive influence of sovereignty. Gabriella Stomp offers a brief outline of the origins of the idea of sovereignty, and then explains not only the diff erent interpretations of sovereignty that have evolved over time, but also the diff erent practices that nation-states have adopted under the protection of sovereign rights. From the perspective of peace studies, sovereignty can be both an asset and a liability, depending on the context. This essay introduces the foundational reasons for why this is so.""",
+        """Just as the debate over nonviolence and violence has been a central element in
+the conceptual evolution of the fi eld of peace studies, so too has the question
+over the 'naturalness' of peace and war. On the one hand, there have been those
+who have argued that humans, like all species, have evolved with and are hard-
+wired for a natural predilection for violence and war. On the other, there are those
+who have argued that we have evolved with and are hard-wired for a natural
+predilection for peace, and thus war is an unnatural aberration to be explained
+by other factors. In one of most original articles to appear on this topic, Robert
+Sapolsky weighs in on this debate to show that both sides have dangerously
+oversimplifi ed the issue. Using a primatologist’s perspective, Sapolsky argues
+that the world of social and political confl ict is not composed exclusively either
+of aggressive chimpanzees or aff ectionate bonobos. Instead, we end up with
+a number of complex variables in play that can help determine whether the
+outcome of any situation is peaceful or not. Understanding the interplay of these
+variables and how they determine diff erent outcomes is far more productive
+than trying to prove that one specifi c variable is natural and unchangeable.""",
+        """What is often referred to as the politics of identity—the various ways that
+identities are constructed and contested from the interpersonal to the
+international levels—plays a central and infl uential role in many aspects of
+peace studies. Whether in civil war or civil society, there is almost always some
+element of identity politics that is in play. Francis Deng shows the complex
+and challenging ways that nation-states in Africa struggle to create a unifi ed
+national identity out of competing sub-national, local, and regional identities.
+If sovereignty represents the political and legal foundations of the state, then
+the creation of national unity among citizens represents the social foundation
+of the state. As this article shows, in situations of complex demographics, this
+is often at best an imperfect fi t. Deng argues that the struggle to balancing
+legal and political aspects of the state with social elements of identity is an
+essential part of maintaining civic peace.""",
+        """There is considerable overlap between the central theories of political
+science and the central theories of peace studies, even if the two fi elds
+approach these theories in slightly diff erent ways. Realism and liberalism are
+two of the most frequently discussed theories in both political science and
+peace studies, and so a fi rm understanding of each theory, and how each
+theory relates to and contests the other, is essential to developing a sound
+grasp to the theoretical architecture of each fi eld. In this essay, well-known
+political theorist Joseph Nye presents not just the basic tenets of realism
+and liberalism, but also explains how each theory developed new variants
+due to political pressures associated with Cold War politics. Neorealism and
+neoliberalism are simultaneously refi nements of and departures from the
+original theories on which they are based, and Nye does a masterful job of
+explaining both the development of neorealism and neoliberalism and the
+diff erences that evolved between them.""",
+
+            ]

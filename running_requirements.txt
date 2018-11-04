@@ -1,0 +1,10 @@
+How to install mongodb:
+https://docs.mongodb.com/manual/administration/install-community/
+
+On Ubuntu to start and stop MongoDB:
+sudo service mongod start
+
+Python dependencies:
+pymongo (pip install pymongo)
+pandas
+jsonify
