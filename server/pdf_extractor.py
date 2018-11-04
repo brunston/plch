@@ -1,7 +1,7 @@
 import PyPDF2
 import sys
 
-class pdfExtractor:
+class PdfExtractor:
     def __init__(self, pdf_file):
         self.pdfReader = PyPDF2.PdfFileReader(open(pdf_file, 'rb'))
 
@@ -14,7 +14,7 @@ class pdfExtractor:
             ## checks for subheaders
             if isinstance(item, list):
                 ## add subheader sections to result list as nested list
-                helper(outline, i, result)
+                self.helper(outline, i, result)
             else:
                 ## add list containing header title, page number, text respectively to result list
                 try:
@@ -23,7 +23,7 @@ class pdfExtractor:
                 except:
                     continue
 
-        generateText(result)
+        self.generate_text(result)
         return result
 
 
@@ -37,7 +37,7 @@ class pdfExtractor:
         for i in range(len(subsections)):
             item = subsections[i]
             if isinstance(item, list):
-                helper(subsections, i, new_list)
+                self.helper(subsections, i, new_list)
             else:
                 try:
                     toAdd = [item['/Title'], pdfReader.getDestinationPageNumber(item)]
@@ -45,7 +45,7 @@ class pdfExtractor:
                 except:
                     continue
 
-    def generateText(self, result):
+    def generate_text(self, result):
         #print len(result)
         for i in range(len(result)):
             page_start = result[i][1]
