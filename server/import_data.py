@@ -1,34 +1,17 @@
-"""
-fsfe_import_data.py
-(c) 2017 Fanalytical Solutions, LLC - All Rights Reserved
-Unauthorized copying of this file, via any medium is strictly prohibited.
-maintainer: @brunston (Brunston Poon, CTO)
-"""
-
-import pandas as pd
 import pymongo
 import sys
-import json
-
-# useful reference github/kbroman/d3examples/mongodb_flask
+from bson import json_util
+from collections import defaultdict
+from gensim import corpora, models
 
 # paths and names
-DATA_PATH = "somecsv.csv"
 DB_NAME = "plchdb"
-COLLECTION_NAME = "textbook"
+COLLECTION_NAME = "corpi"
 
 VERBOSE = True
-
 def vmode(text):
     if VERBOSE:
         print(text)
-
-try:
-    vmode("reading data csv")
-    df = pd.read_csv(DATA_PATH)
-except Exception as e:
-    print(e)
-    sys.exit()
 
 # connect to running mongod service
 try:
@@ -39,18 +22,51 @@ except pymongo.errors.ServerSelectionTimeoutError as e:
     print("mongod local service not detected within timeout specification")
     sys.exit()
 
+# create model and import
+documents = ["Human machine interface for lab abc computer applications",
+             "A survey of user opinion of computer system response time",
+             "The EPS user interface management system",
+             "System and human system engineering testing of EPS",
+             "Relation of user perceived response time to error measurement",
+             "The generation of random binary unordered trees",
+             "The intersection graph of paths in trees",
+             "Graph minors IV Widths of trees and well quasi ordering",
+             "Graph minors A survey"]
+stoplist = set('for a of the and to in'.split())
+texts = [[word for word in document.lower().split() if word not in stoplist]
+         for document in documents]
+frequency = defaultdict(int)
+for text in texts:
+    for word in text:
+        frequency[word] += 1
+texts = [[word for word in text if frequency[word] > 1] for text in texts]
+dictionary = corpora.Dictionary(texts)
+corpus = [dictionary.doc2bow(text) for text in texts]
+tf_idf = models.TfidfModel(corpus)
+corpus_level_tf_idf = tf_idf[corpus]
+
+corpus_to_json_list = []
+for i in range(len(documents)):
+    corpus_to_json_list.append({
+        "docid": i,
+        "heading": documents[i],
+        "tokens": texts[i],
+        "tokens_by_wordid": [j[0] for j in corpus_level_tf_idf[i]],
+        "vector": corpus_level_tf_idf[i]})
+
+print(corpus_to_json_list)
 # connect to database and collection
 vmode("connecting to the database: " + DB_NAME)
 m_db = m_client[DB_NAME]
-vmode("connecting to the collection: " + COLLECTION_NAME)
 m_collection = m_db[COLLECTION_NAME]
 
 vmode("dropping current info of collection")
 m_collection.drop() # remove what's there right now
 # Stackoverflow 20167194 https://goo.gl/DsVPoV
 vmode("loading records")
-records = json.loads(df.T.to_json()).values()
+records = corpus_to_json_list
 m_collection.insert_many(records) # https://goo.gl/mPJQqr
 vmode("closing connection")
 
 m_client.close()
+
