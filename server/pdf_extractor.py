@@ -1,12 +1,12 @@
 import PyPDF2
-from server.topic_analyzer.PyPDF2_pdf_patch import extractText_patch
+from PyPDF2_pdf_patch import extractText_patch
 import os
 
 PyPDF2.pdf.PageObject.extractText = extractText_patch
 
 def get_pdf_file_in_texts(file_name):
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    final_file_path = os.path.join(dir_path, "../../texts/" + file_name)
+    final_file_path = os.path.join(dir_path, "../texts/" + file_name)
     return final_file_path
 
 

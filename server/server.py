@@ -32,9 +32,6 @@ m_db = m_client[DB_NAME]
 m_corpi = m_db[COLLECTION_CORPI]
 l_corpi = list(m_corpi.find({}, FIELDS))
 corpi = pd.DataFrame(l_corpi)
-#corpi.set_index('docid')
-print(l_corpi)
-print(corpi[corpi['docid'].isin([1])].iloc[0].name)
 
 @app.route("/")
 def hello():
@@ -43,7 +40,7 @@ def hello():
 @app.route("/api/v0.1/corpus", methods=['GET'])
 def get_corpus_list():
     # get a list of texts in a corpus
-    return jsonify(list(corpi.loc[:,['heading']]))
+    return jsonify([i[0] for i in corpi.loc[:,['docid']].values.tolist()])
 
 @app.route("/api/v0.1/corpus/text/<int:text>/vector", methods=['GET'])
 def get_scoring_vector(text):
@@ -64,14 +61,10 @@ def get_tokens(text):
 
 @app.route("/api/v0.1/corpus/search/text/<int:text>/find_related/spatial/<int:n>/quantity/<int:qty>", methods=['GET'])
 def get_related_texts(text, n, qty):
-    # locate the nearest texts +n and -n distance from text
-    # return qty number of texts ranked by their relatedness to the text
-    #less_than = corpi[corpi['docid'] <= (n + text)].loc[:, ['docid']].T
-    #greater_than = corpi[corpi['docid'] >= max(0, (text - n))].loc[:, ['docid']].T 
-    #total = list(set(less_than + greater_than))
+
     index_of_text = corpi[corpi['docid'].isin([text])].iloc[0].name
-    lower = max(0, index_of_text - n)
-    upper = min(len(corpi.index), index_of_text + n)
+    lower = max(min(corpi['docid']), index_of_text - n)
+    upper = min(max(corpi['docid']), index_of_text + n)
     return jsonify(list(corpi[lower:upper].loc[:, ['docid']].T))
 
 @app.route("/api/v0.1/corpus/search/word/<int:wordid>/find_texts", methods=['GET'])
