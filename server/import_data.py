@@ -3,6 +3,8 @@ import sys
 from bson import json_util
 from collections import defaultdict
 from gensim import corpora, models
+import topic_analysis as ta
+import pdf_extractor as pdf_extractor
 
 # paths and names
 DB_NAME = "plchdb"
@@ -23,6 +25,7 @@ except pymongo.errors.ServerSelectionTimeoutError as e:
     sys.exit()
 
 # create model and import
+"""
 documents = ["Human machine interface for lab abc computer applications",
              "A survey of user opinion of computer system response time",
              "The EPS user interface management system",
@@ -44,17 +47,20 @@ dictionary = corpora.Dictionary(texts)
 corpus = [dictionary.doc2bow(text) for text in texts]
 tf_idf = models.TfidfModel(corpus)
 corpus_level_tf_idf = tf_idf[corpus]
+"""
 
+pdf_file = pdf_extractor.get_pdf_file_in_texts("reinforcement-an-introduction.pdf")
+analyzer = ta.TopicAnalyzer(pdf_file)
 corpus_to_json_list = []
-for i in range(len(documents)):
+for i in range(len(analyzer.pages)):
     corpus_to_json_list.append({
-        "docid": i,
-        "heading": documents[i],
-        "tokens": texts[i],
-        "tokens_by_wordid": [j[0] for j in corpus_level_tf_idf[i]],
-        "vector": corpus_level_tf_idf[i]})
+        "docid": analyzer.pages[i],
+        "heading": analyzer.headers[i],
+        "tokens": analyzer.processed_corpus[i],
+        "tokens_by_wordid": [j[0] for j in analyzer.id_to_score_corpus[i]],
+        "vector": analyzer.id_to_score_corpus[i]})
 
-print(corpus_to_json_list)
+#print(corpus_to_json_list)
 # connect to database and collection
 vmode("connecting to the database: " + DB_NAME)
 m_db = m_client[DB_NAME]
