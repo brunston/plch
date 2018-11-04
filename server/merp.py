@@ -1,6 +1,6 @@
 import PyPDF2
 
-class PdfExtractor:
+class pdfExtractor:
     def __init__(self, pdf_file):
         self.pdfReader = PyPDF2.PdfFileReader(open(pdf_file, 'rb'))
         self.outline = self.pdfReader.getOutlines()
@@ -22,7 +22,7 @@ class PdfExtractor:
                 except:
                     continue
 
-        self.generate_text(result)
+        self.generateText(result)
         return result
 
 
@@ -44,7 +44,7 @@ class PdfExtractor:
                 except:
                     continue
 
-    def generate_text(self, result):
+    def generateText(self, result):
         #print len(result)
         for i in range(len(result)):
             page_start = result[i][1]
