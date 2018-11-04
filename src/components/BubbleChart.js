@@ -4,38 +4,58 @@ import BubbleLines from "./BubbleLines";
 import BubbleBoxes from "./BubbleBoxes";
 
 class BubbleChart extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      priorDataBoxes: [],
+      postDataBoxes: []
+    };
+  }
 
   my2Callback(dataFromChild) {
-  	this.props.callbackFromParent(dataFromChild);
+    this.props.callbackFromParent(dataFromChild);
+  	const { data, dataBoxes } = this.props;
+    this.state.priorDataBoxes = dataBoxes.filter((boxes, i) => {
+      return boxes.order < dataFromChild.order;
+    });
+    this.state.postDataBoxes = dataBoxes.filter((boxes, i) => {
+      return boxes.order > dataFromChild.order;
+    });
+    console.log(this.state.priorDataBoxes);
   }
 
   render() {
-    const {data, dataBoxes} = this.props;
-    let priorDataBoxes = dataBoxes.filter((boxes, i) => {
-    	return boxes.order < 0;
+  	const { data, dataBoxes } = this.props;
+    this.state.priorDataBoxes = dataBoxes.filter((boxes, i) => {
+      return boxes.order < 0;
     });
-    let postDataBoxes = dataBoxes.filter((boxes, i) => {
-    	return boxes.order > 0;
+    this.state.postDataBoxes = dataBoxes.filter((boxes, i) => {
+      return boxes.order > 0;
     });
+    
 
-    	// <div style={{position: 'initial'}}>
-     //  		<BubbleLines data={data} />
-     //  	</div>
+    // <div style={{position: 'initial'}}>
+    //  		<BubbleLines data={data} />
+    //  	</div>
 
     return (
       <div className="window">
-      		<div className="half" id="top">
-      			<BubbleBoxes dataBoxes={priorDataBoxes} callback2FromParent={this.my2Callback.bind(this)} />
-      		</div>
-      		<div className="half" id="bottom">
-      			<BubbleBoxes dataBoxes={postDataBoxes} callback2FromParent={this.my2Callback.bind(this)} />
-      		</div>      	
+        <div className="half" id="top">
+          <BubbleBoxes
+            dataBoxes={this.state.priorDataBoxes}
+            callback2FromParent={this.my2Callback.bind(this)}
+          />
+        </div>
+        <div className="half" id="bottom">
+          <BubbleBoxes
+            dataBoxes={this.state.postDataBoxes}
+            callback2FromParent={this.my2Callback.bind(this)}
+          />
+        </div>
       </div>
     );
   }
 }
-
-
 
 BubbleChart.defaultProps = {
   data: [],
