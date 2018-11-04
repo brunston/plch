@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "./BubbleChart.css";
-import BubbleLines from "./BubbleLines";
 import BubbleBoxes from "./BubbleBoxes";
 
 class BubbleChart extends Component {
@@ -27,10 +26,10 @@ class BubbleChart extends Component {
   render() {
   	const { data, dataBoxes } = this.props;
     this.state.priorDataBoxes = dataBoxes.filter((boxes, i) => {
-      return boxes.order < 0;
+      return boxes.order < 20;
     });
     this.state.postDataBoxes = dataBoxes.filter((boxes, i) => {
-      return boxes.order > 0;
+      return boxes.order > 20;
     });
     
 

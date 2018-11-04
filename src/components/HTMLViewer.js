@@ -25,7 +25,7 @@ export default class HTMLViewer extends Component {
 
         <div style={{ width: 600 }}>
           <Document
-            file="/files/pacs10.pdf"
+            file="https://github.com/dannychuy/plch/blob/master/texts/reinforcement-an-introduction.pdf"
             onLoadSuccess={this.onDocumentLoadSuccess}
           >
             <Page pageNumber={pageNumber} width={600} />
