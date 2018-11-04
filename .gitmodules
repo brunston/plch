@@ -1,0 +1,3 @@
+[submodule "all_genism.gensim"]
+	path = all_genism.gensim
+	url = https://github.com/RaRe-Technologies/gensim.git

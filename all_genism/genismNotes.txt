@@ -1,0 +1,17 @@
+Genism models
+	start with list of texts (ie. an article =  1 text)
+	remove the common words ie. I, the, he, she, me, wumbo
+	convert the text into bag-of-words (bow) representation 
+		ie. this is a democracy that we need to fight for -> {democracy: 1, fight: 1} (where 'this, is, a, that, we, for' are common words)
+
+		sometimes only represent frequent words ie. words with the most frequency
+	make set of representative words in all texts -> each word needs a unique id 
+		basically you want like [democracy, fight, machine_learning] - concrete order
+		genism has this built in
+	convert text into a vector:
+		ie. "this is a democracy that we need to fight for" -> {democracy: 1, fight: 1} -> [(0, 1), (1,1)]
+		where (0, 1) means word0 (democracy) appears 1 time, (1,1) means word1 (fight) appears 1 time, and machine_learning appears 0 times (not included)
+	do that for all texts => bow_corpus (corpus => a list of texts)
+		ie. bow_corpus = [[(0,1),(1,1)], [(0,5),(2,10)]...]
+	Lots of Genism models simply train on top of these vectors 
+		tfidf = models.TfidfModel(bow_corpus)
