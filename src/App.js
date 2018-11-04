@@ -21,14 +21,15 @@ class App extends Component {
     Modal.setAppElement(this.el);
   }
 
-  // createFakeTopicData() {
-  //   const d = ["Linear Regression", "Linear Growth", "Linear Logistics", "Quadratic Regression", "ReLu"];
-  //   const data = [];
-  //   for (let x = 0; x <= d.length; x++) {
-  //     data.push({ d[x], x, x });
-  //   }
-  //   return data;
-  // }
+  createFakeTopicData() {
+    const d = ["Linear Regression", "Linear Growth", "Linear Logistics", "Quadratic Regression", "ReLu"];
+    const data = [];
+    for (let x = 0; x <= d.length; x++) {
+      let topic = d[x];
+      data.push({ topic, x, x });
+    }
+    return data;
+  }
 
   createFakeArrowData() {
     const d = ["Linear Regression", "Linear Growth", "Linear Logistics", "Quadratic Regression", "ReLu"];
@@ -49,7 +50,7 @@ class App extends Component {
           <button onClick={() => this.setState({ isPaneOpen: true })}>
             Click me to open right pane!
           </button>
-          <BubbleChart data={this.createFakeArrowData()} />
+          <BubbleChart data={this.createFakeArrowData()} dataBox={this.createFakeTopicData()}/>
           <SlidingPane
               className='some-custom-class'
               overlayClassName='some-custom-overlay-class'

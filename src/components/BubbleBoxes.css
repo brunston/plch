@@ -11,7 +11,6 @@
 	border-top-right-radius: 6px;
 	transition: 0.3s;
 	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-	overflow: scroll;
 }
 
 .bubbleline {
